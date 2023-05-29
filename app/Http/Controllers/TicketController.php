@@ -23,10 +23,14 @@ class TicketController extends Controller
     public function index()
     {
         $tickets = Ticket::orderBy('created_at', 'desc')->get();
+        $tickets = TicketResource::collection($tickets);
+
 //        $tickets = Ticket::orderBy('created_at', 'desc')->paginate(5);
 //        $tickets = TicketResource::collection($tickets)->resolve();
-        $tickets = TicketResource::collection($tickets);
-//        dd($tickets);
+//        $tickets = TicketResource::collection($tickets);
+
+//        $tickets = Ticket::orderBy('created_at', 'desc')->paginate(5); // is visible! but isn't work! and without Resource
+
         return Inertia::render('Ticket/Index', compact('tickets'));
     }
 

@@ -39,8 +39,6 @@
                     </div>
                 </div>
             </div>
-
-            <!--<Pagination :links="tickets.links" />-->
         </div>
 
     </AuthenticatedLayout>
@@ -50,11 +48,10 @@
     import { Link } from '@inertiajs/vue3';
     import { Head } from '@inertiajs/vue3';
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-    import Pagination from '@/Components/Pagination.vue'
     export default {
         name: "Index",
         components: {
-            Link, AuthenticatedLayout, Pagination
+            Link, AuthenticatedLayout
         },
         props: [
             'tickets'

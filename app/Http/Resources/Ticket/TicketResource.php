@@ -26,20 +26,6 @@ class TicketResource extends JsonResource
             'updated_at' => $this->updated_at->diffForHumans(),
             'status_name' => $this->status->name,
             'rank' => $this->user->rank,
-//            'comment' => $this->comments->map(function ($comment) {
-//                return [
-//                    'id' => $comment->id,
-//                    'user' => [
-//                        'id' => $comment->user->id,
-//                        'name' => $comment->user->name,
-//                    ],
-//                    'content' => $comment->content,
-//                ];
-//            }),
         ];
-
-
-
-//        return parent::toArray($request);
     }
 }
