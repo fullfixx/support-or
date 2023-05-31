@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Ticket\StoreRequest;
 use App\Http\Requests\Ticket\UpdateRequest;
 use App\Http\Resources\Comment\CommentResource;
+use App\Http\Resources\File\FileResource;
 use App\Http\Resources\Ticket\TicketResource;
 use App\Models\Comment;
+use App\Models\File;
 use App\Models\Status;
 use App\Models\Ticket;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use function League\Flysystem\deleteDirectory;
 use function League\Flysystem\get;
@@ -48,7 +52,20 @@ class TicketController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        Ticket::create($request->validated());
+        $data = $request->validated();
+        $files = $data['files'];
+        unset($data['files']);
+        $ticket = Ticket::create($data);
+
+        foreach ($files as $file) {
+            $name = Carbon::now() .'-' . $file->hashName() . '.' . $file->extension();
+            $filePath = Storage::disk('public')->putFileAs('/files', $file, $name);
+            File::create([
+                'path' => url('/storage/' . $filePath),
+                'ticket_id' => $ticket->id,
+            ]);
+
+        }
         return redirect()->route('ticket.index');
     }
 
@@ -60,7 +77,9 @@ class TicketController extends Controller
         $ticket = new TicketResource($ticket);
         $comments = Comment::where('ticket_id', $ticket->id)->orderBy('created_at', 'desc')->get();
         $comments = CommentResource::collection($comments);
-        return Inertia::render('Ticket/Show', compact('ticket', 'comments'));
+        $files = File::where('ticket_id', $ticket->id)->get();
+        $files = FileResource::collection($files);
+        return Inertia::render('Ticket/Show', compact('ticket', 'comments', 'files'));
     }
 
     /**

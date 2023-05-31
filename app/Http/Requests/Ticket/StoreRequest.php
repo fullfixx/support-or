@@ -27,6 +27,7 @@ class StoreRequest extends FormRequest
             'priority' => 'required',
             'status_id' => 'required',
             'user_id' => 'required',
+            'files' => 'nullable',
         ];
     }
 }

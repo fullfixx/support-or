@@ -25,4 +25,9 @@ class Ticket extends Model
     {
         return $this->hasMany(Comment::class)->orderBy('created_at', 'desc');
     }
+
+    public function files(): hasMany
+    {
+        return $this->hasMany(File::class);
+    }
 }

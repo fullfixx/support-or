@@ -10,9 +10,12 @@
             <div class="py-4">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4">
-                        <div class="text-lg font-bold">{{ ticket.title }}</div>
+                        <div class="flex flex-row justify-between">
+                            <div class="text-lg font-bold">{{ ticket.title }}</div>
+                            <div>priority: {{ ticket.priority }}</div>
+                        </div>
                         <div class="mt-4">{{ ticket.description }}</div>
-                        <div class="flex flex-row justify-between mt-12">
+                        <div class="flex flex-row justify-between mt-8">
                             <div>
                                 status:
                                 <span v-if="ticket.status_id == 1" class="text-red-600 font-bold">{{ ticket.status_name }}</span>
@@ -20,13 +23,10 @@
                                 <span v-if="ticket.status_id == 3" class="text-green-600 font-bold">{{ ticket.status_name }}</span>
                                 <span v-if="ticket.status_id == 4" class="text-gray-400 font-bold">{{ ticket.status_name }}</span>
                             </div>
-                            <div>priority: {{ ticket.priority }}</div>
+                            <div><span class="text-sm font-light text-gray-400 mr-4">created at:</span>{{ ticket.created_at }}</div>
                         </div>
                         <div class="flex flex-row justify-between">
                             <div>author: {{ ticket.user_name }}</div>
-                            <div><span class="text-sm font-light text-gray-400 mr-4">created at:</span>{{ ticket.created_at }}</div>
-                        </div>
-                        <div class="flex flex-row justify-end">
                             <div><span class="text-sm font-light text-gray-400 mr-4">updated at:</span>{{ ticket.updated_at }}</div>
                         </div>
                         <div class="flex flex-row mt-8 gap-x-2">
@@ -41,6 +41,22 @@
                             </div>
                             <div v-if="$page.props.auth.user.id === ticket.user_id">
                                 <Link class="rounded border-gray-300 bg-gray-100 border p-2 hover:border-gray-500 hover:bg-gray-200" :href="route('ticket.closed', ticket.id)">Closed</Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="-mt-2">
+            <div class="py-0">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-2">
+                        <div class="flex flex-row justify-end">
+                            <div v-for="file in files" :key="file.id">
+                                <div class="">
+                                    <img :src="file.path" class="hover:h-full h-16 aspect-video object-cover p-1 rounded-lg cursor-pointer">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -76,7 +92,19 @@
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-2">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4">
                         <div class="flex flex-row gap-4 h-full">
-                            <div class="border border-white border-r-gray-300">
+                            <div v-if="comment.user_id === 1" class="border border-white border-r-4 border-r-red-300">
+                                <div class="shrink-0 w-32">{{ comment.user_name }}</div>
+                                <div class="mt-2 text-sm text-gray-400">{{ comment.created_at }}</div>
+                            </div>
+                            <div v-if="comment.user_id === 2" class="border border-white border-r-4 border-r-blue-300">
+                                <div class="shrink-0 w-32">{{ comment.user_name }}</div>
+                                <div class="mt-2 text-sm text-gray-400">{{ comment.created_at }}</div>
+                            </div>
+                            <div v-if="comment.user_id === 3" class="border border-white border-r-4 border-r-purple-300">
+                                <div class="shrink-0 w-32">{{ comment.user_name }}</div>
+                                <div class="mt-2 text-sm text-gray-400">{{ comment.created_at }}</div>
+                            </div>
+                            <div v-if="comment.user_id === 4" class="border border-white border-r-4 border-r-green-300">
                                 <div class="shrink-0 w-32">{{ comment.user_name }}</div>
                                 <div class="mt-2 text-sm text-gray-400">{{ comment.created_at }}</div>
                             </div>
@@ -96,6 +124,7 @@
     import { Link } from '@inertiajs/vue3';
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
     import { Head } from '@inertiajs/vue3';
+
     export default {
         name: "Index",
         components: {
@@ -109,7 +138,7 @@
             }
         },
         props: [
-            'ticket','comments', 'auth'
+            'ticket','comments', 'auth', 'files'
         ],
         methods: {
             store() {

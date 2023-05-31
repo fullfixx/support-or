@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Ticket;
 
+use App\Http\Resources\File\FileResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -26,6 +27,7 @@ class TicketResource extends JsonResource
             'updated_at' => $this->updated_at->diffForHumans(),
             'status_name' => $this->status->name,
             'rank' => $this->user->rank,
+//            'files' => FileResource::collection($this->files),
         ];
     }
 }
