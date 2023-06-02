@@ -12,7 +12,9 @@ use App\Models\File;
 use App\Models\Status;
 use App\Models\Ticket;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;  // it was changed for Request::input() from index()
+use Illuminate\Support\Facades\Request;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -29,13 +31,22 @@ class TicketController extends Controller
 //        $tickets = Ticket::orderBy('created_at', 'desc')->get();
 //        $tickets = TicketResource::collection($tickets);
 
-        $tickets = Ticket::orderBy('created_at', 'desc')->paginate(5);
+//        $tickets = Ticket::orderBy('created_at', 'desc')->paginate(5);
+        $tickets = Ticket::query()
+            ->when(Request::input('search'), function ($query, $search) {
+                $query->where('description', 'like', "%{$search}%")
+                        ->orWhere('title', 'like', "%{$search}%");
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(5)
+            ->withQueryString();
 //        $tickets = TicketResource::collection($tickets)->resolve();
         $tickets = TicketResource::collection($tickets);
 
 //        $tickets = Ticket::orderBy('created_at', 'desc')->paginate(5); // is visible! but isn't work! and without Resource
+        $filters = Request::only('search');
 
-        return Inertia::render('Ticket/Index', compact('tickets'));
+        return Inertia::render('Ticket/Index', compact('tickets', 'filters'));
     }
 
     /**
@@ -58,7 +69,7 @@ class TicketController extends Controller
         $ticket = Ticket::create($data);
 
         foreach ($files as $file) {
-            $name = Carbon::now() .'-' . $file->hashName() . '.' . $file->extension();
+            $name = Carbon::now() . '-' . $file->hashName() . '.' . $file->extension();
             $filePath = Storage::disk('public')->putFileAs('/files', $file, $name);
             File::create([
                 'path' => url('/storage/' . $filePath),

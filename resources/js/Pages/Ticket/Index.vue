@@ -1,9 +1,34 @@
+<script setup>
+    import {ref, watch} from 'vue';
+    import {router} from '@inertiajs/vue3';
+
+    import {Link} from '@inertiajs/vue3';
+    import {Head} from '@inertiajs/vue3';
+    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+
+
+    let props = defineProps({
+        tickets: Object,
+        filters: Object,
+    });
+    let search = ref(props.filters.search);
+    watch(search, value => {
+        router.get('/tickets', {search: value}, {
+            preserveState: true,
+            replace: true,
+        });
+    });
+
+</script>
 <template>
     <Head title="Tickets"/>
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Tickets</h2>
+            <div class="flex flex-row justify-between">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">Tickets</h2>
+                <input v-model="search" type="text" placeholder="Search.."/>
+            </div>
         </template>
 
         <div v-if="tickets" class="mt-4">
@@ -42,10 +67,10 @@
                                     v-if="$page.props.auth.user.id === ticket.user_id">
                                 Edit</Link>
                             </div>
-                            <div class="ml-2" v-if="$page.props.auth.user.rank === 7">
-                                <p class="rounded border border-red-300 text-red-800 hover:bg-red-300 cursor-pointer px-8"
-                                   @click="deleteTicket(ticket.id)">Delete</p>
-                            </div>
+                            <!--<div class="ml-2" v-if="$page.props.auth.user.rank === 7">-->
+                                <!--<p class="rounded border border-red-300 text-red-800 hover:bg-red-300 cursor-pointer px-8"-->
+                                   <!--@click="deleteTicket(ticket.id)">Delete</p>-->
+                            <!--</div>-->
                         </div>
                     </div>
                 </div>
@@ -66,28 +91,24 @@
         </div>
     </AuthenticatedLayout>
 </template>
+<!--<script>-->
+    <!--import {Link} from '@inertiajs/vue3';-->
+    <!--import {Head} from '@inertiajs/vue3';-->
+    <!--import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';-->
 
-<script>
-    import {Link} from '@inertiajs/vue3';
-    import {Head} from '@inertiajs/vue3';
-    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+    <!--export default {-->
+        <!--name: "Index",-->
+        <!--components: {-->
+            <!--Link, AuthenticatedLayout-->
+        <!--},-->
+        <!--props: [-->
+            <!--'tickets'-->
+        <!--],-->
+        <!--methods: {-->
+            <!--deleteTicket(id) {-->
+                <!--this.$inertia.delete(`/tickets/${id}`)-->
+            <!--},-->
+        <!--}-->
+    <!--}-->
+<!--</script>-->
 
-    export default {
-        name: "Index",
-        components: {
-            Link, AuthenticatedLayout
-        },
-        props: [
-            'tickets'
-        ],
-        methods: {
-            deleteTicket(id) {
-                this.$inertia.delete(`/tickets/${id}`)
-            }
-        }
-    }
-</script>
-
-<style scoped>
-
-</style>
