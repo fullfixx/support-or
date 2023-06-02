@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TicketController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -35,48 +37,44 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/tickets', [\App\Http\Controllers\TicketController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('ticket.index');
+Route::middleware(['auth', 'verified'])->group(function () {
 
-Route::get('/tickets/create', [\App\Http\Controllers\TicketController::class, 'create'])
-    ->middleware(['auth', 'verified'])
-    ->name('ticket.create');
+    Route::get('/tickets', [TicketController::class, 'index'])
+        ->name('ticket.index');
 
-Route::post('/tickets', [\App\Http\Controllers\TicketController::class, 'store'])
-    ->middleware(['auth', 'verified'])
-    ->name('ticket.store');
+    Route::get('/tickets/group/{status_id}', [TicketController::class, 'indexGroup'])
+        ->name('ticket.index.group');
 
-Route::get('/tickets/{ticket}', [\App\Http\Controllers\TicketController::class, 'show'])
-    ->middleware(['auth', 'verified'])
-    ->name('ticket.show');
+    Route::get('/tickets/create', [TicketController::class, 'create'])
+        ->name('ticket.create');
 
-Route::get('/tickets/{ticket}/edit', [\App\Http\Controllers\TicketController::class, 'edit'])
-    ->middleware(['auth', 'verified'])
-    ->name('ticket.edit');
+    Route::post('/tickets', [TicketController::class, 'store'])
+        ->name('ticket.store');
 
-Route::patch('/tickets/{ticket}', [\App\Http\Controllers\TicketController::class, 'update'])
-    ->middleware(['auth', 'verified'])
-    ->name('ticket.update');
+    Route::get('/tickets/{ticket}', [TicketController::class, 'show'])
+        ->name('ticket.show');
 
-Route::get('/tickets/{ticket}/status/2', [\App\Http\Controllers\TicketController::class, 'working'])
-    ->middleware(['auth', 'verified'])
-    ->name('ticket.working');
+    Route::get('/tickets/{ticket}/edit', [TicketController::class, 'edit'])
+        ->name('ticket.edit');
 
-Route::get('/tickets/{ticket}/status/3', [\App\Http\Controllers\TicketController::class, 'done'])
-    ->middleware(['auth', 'verified'])
-    ->name('ticket.done');
+    Route::patch('/tickets/{ticket}', [TicketController::class, 'update'])
+        ->name('ticket.update');
 
-Route::get('/tickets/{ticket}/status/4', [\App\Http\Controllers\TicketController::class, 'closed'])
-    ->middleware(['auth', 'verified'])
-    ->name('ticket.closed');
+    Route::get('/tickets/{ticket}/status/2', [TicketController::class, 'working'])
+        ->name('ticket.working');
 
-Route::delete('/tickets/{ticket}', [\App\Http\Controllers\TicketController::class, 'destroy'])
-    ->middleware(['auth', 'verified'])
-    ->name('ticket.destroy');
+    Route::get('/tickets/{ticket}/status/3', [TicketController::class, 'done'])
+        ->name('ticket.done');
 
-Route::post('/comments', [\App\Http\Controllers\CommentController::class, 'store'])
-    ->middleware(['auth', 'verified'])
-    ->name('comments.store');
+    Route::get('/tickets/{ticket}/status/4', [TicketController::class, 'closed'])
+        ->name('ticket.closed');
+
+    Route::delete('/tickets/{ticket}', [TicketController::class, 'destroy'])
+        ->name('ticket.destroy');
+
+    Route::post('/comments', [CommentController::class, 'store'])
+        ->name('comments.store');
+});
+
 
 require __DIR__.'/auth.php';

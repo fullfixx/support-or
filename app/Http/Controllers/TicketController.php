@@ -38,12 +38,30 @@ class TicketController extends Controller
                         ->orWhere('title', 'like', "%{$search}%");
             })
             ->orderBy('created_at', 'desc')
-            ->paginate(5)
+            ->paginate(10)
             ->withQueryString();
 //        $tickets = TicketResource::collection($tickets)->resolve();
         $tickets = TicketResource::collection($tickets);
 
 //        $tickets = Ticket::orderBy('created_at', 'desc')->paginate(5); // is visible! but isn't work! and without Resource
+        $filters = Request::only('search');
+
+        return Inertia::render('Ticket/Index', compact('tickets', 'filters'));
+    }
+
+    public function indexGroup($status_id)
+    {
+        $tickets = Ticket::query()
+            ->when(Request::input('search'), function ($query, $search) {
+                $query->where('description', 'like', "%{$search}%")
+                        ->orWhere('title', 'like', "%{$search}%");
+            })
+            ->where('status_id', '=', $status_id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->withQueryString();
+
+        $tickets = TicketResource::collection($tickets);
         $filters = Request::only('search');
 
         return Inertia::render('Ticket/Index', compact('tickets', 'filters'));

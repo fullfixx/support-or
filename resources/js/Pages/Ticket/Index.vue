@@ -27,7 +27,14 @@
         <template #header>
             <div class="flex flex-row justify-between">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">Tickets</h2>
-                <input v-model="search" type="text" placeholder="Search.."/>
+                <div class="flex flex-row gap-2 items-center">
+                    <a :href="route('ticket.index')" ><div class="flex-none w-20 border border-gray-500 text-center py-2 rounded-lg bg-gray-1000 hover:bg-gray-700 hover:text-white">all</div></a>
+                    <a :href="route('ticket.index.group', 1)" ><div class="flex-none w-20 border border-gray-300 text-center py-2 rounded-lg bg-red-100 hover:bg-gray-700 hover:text-white">new</div></a>
+                    <a :href="route('ticket.index.group', 2)" ><div class="flex-none w-20 border border-gray-300 text-center py-2 rounded-lg bg-blue-100 hover:bg-gray-700 hover:text-white">working</div></a>
+                    <a :href="route('ticket.index.group', 3)" ><div class="flex-none w-20 border border-gray-300 text-center py-2 rounded-lg bg-green-200 hover:bg-gray-700 hover:text-white">done</div></a>
+                    <a :href="route('ticket.index.group', 4)" ><div class="flex-none w-20 border border-gray-300 text-center py-2 rounded-lg bg-gray-200 hover:bg-gray-700 hover:text-white">closed</div></a>
+                    <div ><input v-model="search" type="text" placeholder="Search.."/></div>
+                </div>
             </div>
         </template>
 
