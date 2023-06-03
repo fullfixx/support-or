@@ -14,8 +14,9 @@
                             <div class="text-lg font-bold">{{ ticket.title }}</div>
                             <div>priority: {{ ticket.priority }}</div>
                         </div>
-                        <div class="mt-4">{{ ticket.description }}</div>
-                        <div class="flex flex-row justify-between mt-8">
+                        <div><textarea class="mt-3 block w-full rounded border border-gray-300 bg-stone-50" v-html="ticket.description" rows="8" disabled></textarea></div>
+                        <div class="mt-4 text-end"><span class="text-sm font-light text-gray-400 mr-4">deadline:</span> {{ ticket.deadline_carbon }}</div>
+                        <div class="flex flex-row justify-between mt-0">
                             <div>
                                 status:
                                 <span v-if="ticket.status_id == 1" class="text-red-600 font-bold">{{ ticket.status_name }}</span>
@@ -29,18 +30,28 @@
                             <div>author: {{ ticket.user_name }}</div>
                             <div><span class="text-sm font-light text-gray-400 mr-4">updated at:</span>{{ ticket.updated_at }}</div>
                         </div>
-                        <div class="flex flex-row mt-8 gap-x-2">
+                        <div class="mt-3">
+                            <span class="text-medium text-gray-500">Available Actions:</span>
+                        </div>
+                        <div class="flex flex-row mt-3 justify-between">
+                            <div class="flex flex-row justify-start gap-x-2">
+                                <div v-if="$page.props.auth.user.rank === 7">
+                                    <Link class="rounded border-sky-300 bg-sky-100 border p-2 hover:border-sky-500 hover:bg-sky-200" :href="route('ticket.working', ticket.id)">Working</Link>
+                                </div>
+                                <div v-if="$page.props.auth.user.rank === 7">
+                                    <Link class="rounded border-green-300 bg-green-100 border p-2 hover:border-green-500 hover:bg-green-200" :href="route('ticket.done', ticket.id)">Done</Link>
+                                </div>
+                                <div v-if="$page.props.auth.user.id === ticket.user_id">
+                                    <Link class="rounded border-gray-300 bg-gray-100 border p-2 hover:border-gray-500 hover:bg-gray-200" :href="route('ticket.closed', ticket.id)">Closed</Link>
+                                </div>
+                            </div>
+
                             <div>
-                                <span class="text-medium text-gray-500">Available Actions:</span>
-                            </div>
-                            <div v-if="$page.props.auth.user.rank === 7">
-                                <Link class="rounded border-sky-300 bg-sky-100 border p-2 hover:border-sky-500 hover:bg-sky-200" :href="route('ticket.working', ticket.id)">Working</Link>
-                            </div>
-                            <div v-if="$page.props.auth.user.rank === 7">
-                                <Link class="rounded border-green-300 bg-green-100 border p-2 hover:border-green-500 hover:bg-green-200" :href="route('ticket.done', ticket.id)">Done</Link>
-                            </div>
-                            <div v-if="$page.props.auth.user.id === ticket.user_id">
-                                <Link class="rounded border-gray-300 bg-gray-100 border p-2 hover:border-gray-500 hover:bg-gray-200" :href="route('ticket.closed', ticket.id)">Closed</Link>
+                                <Link
+                                    class="rounded border-green-300 bg-green-100 border p-2 hover:border-green-500 hover:bg-green-200"
+                                    :href="route('ticket.edit', ticket.id)"
+                                    v-if="$page.props.auth.user.id === ticket.user_id">
+                                Edit</Link>
                             </div>
                         </div>
                     </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Ticket;
 
 use App\Http\Resources\File\FileResource;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -25,6 +26,8 @@ class TicketResource extends JsonResource
             'user_name' => $this->user->name,
             'created_at' => $this->created_at->diffForHumans(),
             'updated_at' => $this->updated_at->diffForHumans(),
+            'deadline_raw' =>$this->deadline,
+            'deadline_carbon' => Carbon::parse($this->deadline)->format('d F Y'),
             'status_name' => $this->status->name,
             'rank' => $this->user->rank,
 //            'files' => FileResource::collection($this->files),

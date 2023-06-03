@@ -50,6 +50,14 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="mb-4">
+                                <div>
+                                    <label for="deadline">Deadline</label>
+                                </div>
+                                <div>
+                                    <input v-model="deadline" class="rounded border-gray-300" id="deadline" type="date">
+                                </div>
+                            </div>
                             <div>
                                 <input @click.prevent="store" class="rounded border border-sky-300 py-2 px-8 hover:bg-sky-200 hover:border-sky-500" type="submit" value="Store">
                             </div>
@@ -81,7 +89,8 @@
                 priority: 2,
                 status_id: null,
                 user_id: null,
-                dropzone: null
+                deadline: null,
+                dropzone: null,
             }
         },
 
@@ -110,6 +119,7 @@
                     priority: this.priority,
                     status_id: 1,
                     user_id: this.auth.user.id,
+                    deadline: this.deadline,
                     files: this.dropzone.getAcceptedFiles()
                 })
             }

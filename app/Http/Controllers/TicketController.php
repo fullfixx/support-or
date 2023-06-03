@@ -82,6 +82,7 @@ class TicketController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
+//        dd($data);
         $files = $data['files'];
         unset($data['files']);
         $ticket = Ticket::create($data);
@@ -116,6 +117,7 @@ class TicketController extends Controller
      */
     public function edit(Ticket $ticket)
     {
+        $ticket = new TicketResource($ticket);
         return Inertia::render('Ticket/Edit', compact('ticket'));
     }
 
@@ -126,7 +128,7 @@ class TicketController extends Controller
     {
 //        dd($ticket);
         $ticket->update($request->validated());
-        return redirect()->route('ticket.index');
+        return redirect()->route('ticket.show', $ticket->id);
     }
 
     public function working($ticket_id)

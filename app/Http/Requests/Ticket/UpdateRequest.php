@@ -27,6 +27,7 @@ class UpdateRequest extends FormRequest
             'priority' => '',
             'status_id' => '',
             'user_id' => '',
+            'deadline' => '',
         ];
     }
 }
