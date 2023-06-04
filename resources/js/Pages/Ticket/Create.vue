@@ -10,7 +10,7 @@
             <div class="py-4 mb-2">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4">
-                        <form @submit.prevent="store">
+                        <form @keyup.ctrl.enter.exact="store">
                             <div class="mb-4">
                                 <div>
                                     <label for="title">Title</label>
@@ -57,9 +57,12 @@
                                 <div>
                                     <input v-model="deadline" class="rounded border-gray-300" id="deadline" type="date">
                                 </div>
+                                <div>
+                                    <div v-if="errors.deadline">{{ errors.deadline }}</div>
+                                </div>
                             </div>
                             <div>
-                                <input @click.prevent="store" class="rounded border border-sky-300 py-2 px-8 hover:bg-sky-200 hover:border-sky-500" type="submit" value="Store">
+                                <input class="rounded border border-sky-300 py-2 px-8 hover:bg-sky-200 hover:border-sky-500" type="submit" value="Store">
                             </div>
                         </form>
                     </div>

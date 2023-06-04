@@ -10,7 +10,7 @@
             <div class="py-4 mb-2">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4">
-                        <form @submit.prevent="update">
+                        <form @keyup.ctrl.enter.exact="update">
                             <div class="mb-4">
                                 <div>
                                     <label for="title">Title</label>
@@ -47,8 +47,9 @@
                                     <option value="3">(3) Low</option>
                                 </select>
                             </div>
-                            <div>
-                                <button class="rounded border border-sky-300 bg-sky-100 py-2 px-8 hover:border-sky-500 hover:bg-sky-200" type="submit">Update</button>
+                            <div class="flex flex-row justify-between">
+                                <button class="rounded border border-sky-300 bg-sky-100 px-8 hover:border-sky-500 hover:bg-sky-200" type="submit">Update</button>
+                                <Link :href="route('ticket.show', ticket.id)" class="rounded border border-red-300 bg-red-100 h-full px-8 py-2 hover:border-sky-500 hover:bg-sky-200">Cancel</Link>
                             </div>
                         </form>
                     </div>

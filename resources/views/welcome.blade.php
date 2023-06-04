@@ -133,6 +133,9 @@
                     <div class="ml-4 text-center text-sm text-gray-500 dark:text-gray-400 sm:text-right sm:ml-0">
                         Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
                     </div>
+                    <div class="lorem">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, consequatur debitis eos explicabo fugit harum laboriosam maxime nam nihil nobis pariatur, placeat qui quibusdam quidem tempore, totam ut veniam voluptate.
+                    </div>
                 </div>
             </div>
         </div>

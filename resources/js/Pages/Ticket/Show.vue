@@ -14,7 +14,7 @@
                             <div class="text-lg font-bold">{{ ticket.title }}</div>
                             <div>priority: {{ ticket.priority }}</div>
                         </div>
-                        <div><textarea class="mt-3 block w-full rounded border border-gray-300 bg-stone-50" v-html="ticket.description" rows="8" disabled></textarea></div>
+                        <div class="mt-3 block w-full rounded border border-dashed border-gray-300 bg-stone-50 whitespace-pre-wrap p-4">{{ ticket.description }}</div>
                         <div class="mt-4 text-end"><span class="text-sm font-light text-gray-400 mr-4">deadline:</span> {{ ticket.deadline_carbon }}</div>
                         <div class="flex flex-row justify-between mt-0">
                             <div>
@@ -83,13 +83,13 @@
             <div class="py-4">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4">
-                        <form @submit.prevent="store">
+                        <form @keyup.ctrl.enter="store">
                             <div class="flex flex-row gap-x-2 justify-start">
                                 <div class="flex-initial w-80">
-                                    <input v-model="content" class="block w-full rounded border-gray-300" type="text" id="title" placeholder="leave your comment here...">
+                                    <textarea v-model="content" class="block w-full rounded border-gray-300" id="title" rows="2" placeholder="leave your comment here..."></textarea>
                                 </div>
                                 <div>
-                                    <button class="rounded border border-sky-300 py-2 px-8 hover:bg-sky-200 hover:border-sky-500" type="submit">Send</button>
+                                    <button class="h-full rounded border border-sky-300 bg-sky-50 py-2 px-8 hover:bg-sky-200 hover:border-sky-500" type="submit">Send</button>
                                 </div>
                             </div>
                         </form>
@@ -98,10 +98,10 @@
             </div>
         </div>
 
-        <div v-if="comments" class="-mt-4">
+        <div v-if="comments" class="pb-20">
             <div v-for="comment in comments">
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-2">
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-3 p-4">
                         <div class="flex flex-row gap-4 h-full">
                             <div v-if="comment.user_id === 1" class="border border-white border-r-4 border-r-red-300">
                                 <div class="shrink-0 w-32">{{ comment.user_name }}</div>
@@ -119,7 +119,7 @@
                                 <div class="shrink-0 w-32">{{ comment.user_name }}</div>
                                 <div class="mt-2 text-sm text-gray-400">{{ comment.created_at }}</div>
                             </div>
-                            <div class="grow">{{ comment.content }}</div>
+                            <div class="grow whitespace-pre-wrap">{{ comment.content }}</div>
                         </div>
                         <div class="flex flex-row justify-end">
                         </div>
@@ -157,7 +157,8 @@
                     user_id: this.auth.user.id,
                     ticket_id: this.ticket.id,
                     content: this.content
-                })
+                });
+                this.content = null;
             }
         },
     }
