@@ -46,12 +46,20 @@
                                 </div>
                             </div>
 
-                            <div>
-                                <Link
-                                    class="rounded border-green-300 bg-green-100 border p-2 hover:border-green-500 hover:bg-green-200"
-                                    :href="route('ticket.edit', ticket.id)"
-                                    v-if="$page.props.auth.user.id === ticket.user_id">
-                                Edit</Link>
+                            <div class="flex flex-row justify-end gap-x-2">
+                                <div>
+                                    <Link
+                                        class="rounded border-green-300 bg-green-100 border p-2 hover:border-green-500 hover:bg-green-200"
+                                        :href="route('file.create', ticket.id)">
+                                    Add a file</Link>
+                                </div>
+                                <div>
+                                    <Link
+                                        class="rounded border-green-300 bg-green-100 border p-2 hover:border-green-500 hover:bg-green-200"
+                                        :href="route('ticket.edit', ticket.id)"
+                                        v-if="$page.props.auth.user.id === ticket.user_id">
+                                    Edit</Link>
+                                </div>
                             </div>
                         </div>
                     </div>

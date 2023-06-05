@@ -33,7 +33,7 @@
                     <a :href="route('ticket.index.group', 2)" ><div class="flex-none w-20 border border-gray-300 text-center py-2 rounded-lg bg-blue-100 hover:bg-gray-700 hover:text-white">working</div></a>
                     <a :href="route('ticket.index.group', 3)" ><div class="flex-none w-20 border border-gray-300 text-center py-2 rounded-lg bg-green-200 hover:bg-gray-700 hover:text-white">done</div></a>
                     <a :href="route('ticket.index.group', 4)" ><div class="flex-none w-20 border border-gray-300 text-center py-2 rounded-lg bg-gray-200 hover:bg-gray-700 hover:text-white">closed</div></a>
-                    <div ><input v-model="search" type="text" placeholder="Search.."/></div>
+                    <div ><input class="rounded-lg border border-gray-500" v-model="search" type="text" placeholder="Search.."/></div>
                 </div>
             </div>
         </template>

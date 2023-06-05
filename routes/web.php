@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TicketController;
 use Illuminate\Foundation\Application;
@@ -74,6 +75,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/comments', [CommentController::class, 'store'])
         ->name('comments.store');
+
+    Route::get('/tickets/{ticket}/files/create', [FileController::class, 'create'])
+        ->name('file.create');
+
+    Route::post('/files', [FileController::class, 'store'])
+        ->name('file.store');
 });
 
 
