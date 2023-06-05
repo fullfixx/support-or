@@ -34,6 +34,7 @@ class FileController extends Controller
     public function store(StoreRequest $request, Ticket $ticket)
     {
         $data = $request->validated();
+        $ticket_id = $data['ticket_id'];
         $files = $data['files'];
         foreach ($files as $file) {
             $name = Carbon::now() . '-' . $file->hashName() . '.' . $file->extension();
@@ -44,7 +45,7 @@ class FileController extends Controller
             ]);
 
         }
-        return redirect()->route('ticket.index');
+        return redirect()->route('ticket.show', $ticket_id);
     }
 
     /**
