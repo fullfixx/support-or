@@ -91,13 +91,13 @@
             <div class="py-4">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4">
-                        <form @keyup.ctrl.enter="store">
+                        <form @keyup.ctrl.enter.exact="store">
                             <div class="flex flex-row gap-x-2 justify-start">
                                 <div class="flex-initial w-80">
                                     <textarea v-model="content" class="block w-full rounded border-gray-300" id="title" rows="2" placeholder="leave your comment here..."></textarea>
                                 </div>
                                 <div>
-                                    <button class="h-full rounded border border-sky-300 bg-sky-50 py-2 px-8 hover:bg-sky-200 hover:border-sky-500" type="submit">Send</button>
+                                    <input class="h-full rounded border border-sky-300 bg-sky-50 py-2 px-8 hover:bg-sky-200 hover:border-sky-500" type="submit" value="Send" />
                                 </div>
                             </div>
                         </form>
@@ -106,8 +106,8 @@
             </div>
         </div>
 
-        <div v-if="comments" class="pb-20">
-            <div v-for="comment in comments">
+        <div v-if="ticket.comments" class="pb-20">
+            <div v-for="comment in ticket.comments">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-3 p-4">
                         <div class="flex flex-row gap-4 h-full">

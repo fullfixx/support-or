@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Ticket;
 
+use App\Http\Resources\Comment\CommentResource;
 use App\Http\Resources\File\FileResource;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -30,6 +31,7 @@ class TicketResource extends JsonResource
             'deadline_carbon' => Carbon::parse($this->deadline)->format('d F Y'),
             'status_name' => $this->status->name,
             'rank' => $this->user->rank,
+            'comments' => CommentResource::collection($this->comments),
 //            'files' => FileResource::collection($this->files),
         ];
     }

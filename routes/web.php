@@ -74,7 +74,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('ticket.destroy');
 
     Route::post('/comments', [CommentController::class, 'store'])
-        ->name('comments.store');
+        ->name('comment.store');
 
     Route::get('/tickets/{ticket}/files/create', [FileController::class, 'create'])
         ->name('file.create');

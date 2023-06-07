@@ -105,11 +105,11 @@ class TicketController extends Controller
     public function show(Ticket $ticket)
     {
         $ticket = new TicketResource($ticket);
-        $comments = Comment::where('ticket_id', $ticket->id)->orderBy('created_at', 'desc')->get();
-        $comments = CommentResource::collection($comments);
+//        $comments = Comment::where('ticket_id', $ticket->id)->orderBy('created_at', 'desc')->get();
+//        $comments = CommentResource::collection($comments);
         $files = File::where('ticket_id', $ticket->id)->get();
         $files = FileResource::collection($files);
-        return Inertia::render('Ticket/Show', compact('ticket', 'comments', 'files'));
+        return Inertia::render('Ticket/Show', compact('ticket', 'files'));
     }
 
     /**
