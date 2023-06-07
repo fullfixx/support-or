@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\GoalController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TicketController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -81,6 +83,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/files', [FileController::class, 'store'])
         ->name('file.store');
+
+    Route::get('/goals', [GoalController::class, 'index'])
+        ->name('goal.index');
+
+    Route::post('/goals', [GoalController::class, 'store'])
+        ->name('goal.store');
+
+    Route::get('/tasks', [TaskController::class, 'index'])
+        ->name('task.index');
+
+    Route::post('/tasks', [TaskController::class, 'store'])
+        ->name('task.store');
 });
 
 
