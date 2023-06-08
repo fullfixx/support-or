@@ -10,15 +10,6 @@ use Inertia\Inertia;
 class TaskController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $tasks = Task::all();
-        return Inertia::render('Task/Index', compact('tasks'));
-    }
-
-    /**
      * Show the form for creating a new resource.
      */
     public function create()
@@ -32,7 +23,7 @@ class TaskController extends Controller
     public function store(StoreRequest $request)
     {
         Task::create($request->validated());
-        return redirect()->route('task.index');
+        return redirect()->route('goal.index');
     }
 
     /**
@@ -60,10 +51,21 @@ class TaskController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     */
+    public function changeStatus(Request $request, Task $task)
+    {
+//        dd($request);
+        $task->update($request->validate(['status' => 'required',]));
+        return redirect()->route('goal.index');
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task)
+    public function delete(Task $task)
     {
-        //
+        $task->delete();
+        return redirect()->route('goal.index');
     }
 }

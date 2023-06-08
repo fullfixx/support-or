@@ -91,7 +91,7 @@
             <div class="py-4">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4">
-                        <form @keyup.ctrl.enter="store">
+                        <form @submit.prevent="store">
                             <div class="flex flex-row gap-x-2 justify-start">
                                 <div class="flex-initial w-80">
                                     <textarea v-model="content" class="block w-full rounded border-gray-300" id="title" rows="2" placeholder="leave your comment here..."></textarea>

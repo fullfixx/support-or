@@ -6,6 +6,7 @@ use App\Http\Requests\Goal\StoreRequest;
 use App\Http\Resources\Goal\GoalResource;
 use App\Models\Goal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class GoalController extends Controller
@@ -26,7 +27,7 @@ class GoalController extends Controller
     public function store(StoreRequest $request)
     {
         Goal::create($request->validated());
-        return redirect()->route('task.index');
+        return redirect()->route('goal.index');
     }
 
     /**
@@ -40,8 +41,9 @@ class GoalController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Goal $goal)
+    public function delete(Goal $goal)
     {
-        //
+        $goal->delete();
+        return redirect()->route('goal.index');
     }
 }

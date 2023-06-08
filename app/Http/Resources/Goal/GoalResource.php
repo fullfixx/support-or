@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Goal;
 
 use App\Http\Resources\Task\TaskResource;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,6 +19,8 @@ class GoalResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'description' => $this->description,
+            'deadline' => Carbon::parse($this->deadline)->format('d F Y'),
 //            'tasks' => $this->tasks->map(function ($task) {
 //                return [
 //                    'id' => $task->id,

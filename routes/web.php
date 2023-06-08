@@ -90,11 +90,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/goals', [GoalController::class, 'store'])
         ->name('goal.store');
 
-    Route::get('/tasks', [TaskController::class, 'index'])
-        ->name('task.index');
-
     Route::post('/tasks', [TaskController::class, 'store'])
         ->name('task.store');
+
+    Route::delete('/goals/{goal}', [GoalController::class, 'delete'])
+        ->name('goal.delete');
+
+    Route::delete('/tasks/{task}', [TaskController::class, 'delete'])
+        ->name('task.delete');
+
+    Route::patch('/tasks/{task}', [TaskController::class, 'changeStatus'])
+        ->name('task.changeStatus');
+
 });
 
 
