@@ -43,6 +43,7 @@ class GoalController extends Controller
      */
     public function delete(Goal $goal)
     {
+        $goal->tasks()->delete();
         $goal->delete();
         return redirect()->route('goal.index');
     }
