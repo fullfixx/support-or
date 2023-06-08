@@ -10,7 +10,22 @@ import { Head } from '@inertiajs/vue3';
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
         </template>
 
-        <div class="py-12">
+        <div class="pt-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900">
+                        <h3 class="font-extrabold">Patch 08.06.2023 notes</h3>
+                        <ul class="mt-4 pl-6 list-disc">
+                            <li>добавлен раздел "Goals" с базовыми инструментами управления;</li>
+                            <li>была немного улучшена визуальная часть приложения.</li>
+                            <li>исправлены баги с отправкой форм в разделе "Tickets"</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
@@ -29,6 +44,7 @@ import { Head } from '@inertiajs/vue3';
                 </div>
             </div>
         </div>
+
     </AuthenticatedLayout>
 
 </template>
