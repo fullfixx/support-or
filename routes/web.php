@@ -3,6 +3,7 @@
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\GoalController;
+use App\Http\Controllers\MoyskladController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TicketController;
@@ -101,6 +102,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::patch('/tasks/{task}', [TaskController::class, 'changeStatus'])
         ->name('task.changeStatus');
+
+    Route::get('moysklad', [MoyskladController::class, 'index']);
 
 });
 
