@@ -60,6 +60,13 @@
                                         v-if="$page.props.auth.user.id === ticket.user_id">
                                     Edit</Link>
                                 </div>
+                                <div>
+                                    <p
+                                        class="rounded border-red-300 bg-red-100 border px-1 cursor-pointer hover:border-red-500 hover:bg-red-200"
+                                        @click="deleteTicket(ticket.id)"
+                                        v-if="$page.props.auth.user.rank === 7">
+                                    Del</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -167,6 +174,10 @@
                     content: this.content
                 });
                 this.content = null;
+
+            },
+            deleteTicket(id) {
+            this.$inertia.delete(`/tickets/${id}`)
             }
         },
     }

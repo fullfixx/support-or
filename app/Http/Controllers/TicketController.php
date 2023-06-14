@@ -161,7 +161,7 @@ class TicketController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Ticket $ticket)
+    public function delete(Ticket $ticket)
     {
         $ticket->delete();
         return redirect()->route('ticket.index');
