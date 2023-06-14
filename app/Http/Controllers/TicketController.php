@@ -7,6 +7,7 @@ use App\Http\Requests\Ticket\UpdateRequest;
 use App\Http\Resources\Comment\CommentResource;
 use App\Http\Resources\File\FileResource;
 use App\Http\Resources\Ticket\TicketResource;
+use App\Jobs\TelegramNotificationJob;
 use App\Models\Comment;
 use App\Models\File;
 use App\Models\Status;
@@ -98,10 +99,11 @@ class TicketController extends Controller
         }
 
         // Notification via Telegram
-        $token = '5915915467:AAHnqdLbw2H6ELKlIqaHZ8VNZGwVOO1VmgQ';
-        $chat_id = '543172626';
-        $message = "New Ticket!";
-        file_get_contents('https://api.telegram.org/bot'.$token.'/sendMessage?chat_id='.$chat_id.'&text='.urlencode($message));
+//        $token = '5915915467:AAHnqdLbw2H6ELKlIqaHZ8VNZGwVOO1VmgQ';
+//        $chat_id = '543172626';
+//        $message = "New Ticket!";
+//        file_get_contents('https://api.telegram.org/bot'.$token.'/sendMessage?chat_id='.$chat_id.'&text='.urlencode($message));
+            dispatch(new TelegramNotificationJob(543172626));
 
         return redirect()->route('ticket.index');
     }
