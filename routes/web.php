@@ -104,7 +104,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/tasks/{task}', [TaskController::class, 'changeStatus'])
         ->name('task.changeStatus');
 
-    Route::get('moysklad', [MoyskladController::class, 'index']);
+    Route::get('/moysklad/import', [MoyskladController::class, 'import'])
+        ->name('moysklad.import');
+
+    Route::get('/moysklads', [MoyskladController::class, 'index'])
+        ->name('moysklad.index');
+
+    Route::get('/moysklads/store', [MoyskladController::class, 'store'])
+        ->name('moysklad.store');
+
+    Route::get('/test', [MoyskladController::class, 'test']);
+
     Route::get('prestashop', [PrestashopController::class, 'index']);
 
 });
