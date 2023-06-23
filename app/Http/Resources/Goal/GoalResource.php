@@ -21,12 +21,6 @@ class GoalResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'deadline' => Carbon::parse($this->deadline)->format('d F Y'),
-//            'tasks' => $this->tasks->map(function ($task) {
-//                return [
-//                    'id' => $task->id,
-//                    'name' => $task->name,
-//                ];
-//            }),
             'tasks' => TaskResource::collection($this->tasks),
         ];
     }

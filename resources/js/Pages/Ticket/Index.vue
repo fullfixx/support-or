@@ -40,9 +40,8 @@
 
         <div v-if="tickets" class="mt-8">
             <div v-for="ticket in tickets.data" :key="ticket.id">
-                <Link :href="route('ticket.show', ticket.id)">
-
-                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <Link :href="route('ticket.show', ticket.id)">
                         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4 my-6 border border-gray-300">
                             <div class="flex flex-row justify-between">
                                 <div class="font-semibold">{{ ticket.title }}</div>
@@ -63,9 +62,8 @@
                                 <div>{{ ticket.created_at }}</div>
                             </div>
                         </div>
-                    </div>
-
-                </Link>
+                    </Link>
+                </div>
             </div>
         </div>
 

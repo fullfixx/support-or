@@ -38,6 +38,7 @@ class TicketController extends Controller
                 $query->where('description', 'like', "%{$search}%")
                         ->orWhere('title', 'like', "%{$search}%");
             })
+            ->orderBy('status_id', 'asc')
             ->orderBy('created_at', 'desc')
             ->paginate(10)
             ->withQueryString();
