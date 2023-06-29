@@ -14,6 +14,21 @@ import { Head } from '@inertiajs/vue3';
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
+                        <h3 class="font-extrabold">Patch 29.06.2023 notes</h3>
+                        <ul class="mt-4 pl-6 list-disc">
+                            <li>добавлена функция оповещений о новых комментариях внутри тикетов через Telegram. Для начала использования нужно найти контакт <span class="font-mono text-red-600">@OnerideBot</span> и написать ему в чат <span class="font-mono text-red-600">/start</span></li>
+                            <li>в профайле появилось новое поле "Telegram Chat ID". В нём указывается "chat ID" вашего Телеграм-аккаунта. Если вы хотите получать уведомления, этот номер нужно указать. Узнать свой "chat ID" можно по адресу <span class="font-mono text-red-600">@getmyid_bot</span></li>
+                            <li>добавлен новый статус для тикетов - "Postponed". Этот статус получают тикеты, работа по которым временно приостановлена. Причина указывается в комментариях внутри тикета.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900">
                         <h3 class="font-extrabold">Patch 08.06.2023 notes</h3>
                         <ul class="mt-4 pl-6 list-disc">
                             <li>добавлен раздел "Goals" с базовыми инструментами управления;</li>
