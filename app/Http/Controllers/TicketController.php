@@ -84,7 +84,6 @@ class TicketController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
-//        dd($data);
         $files = $data['files'];
         unset($data['files']);
         $ticket = Ticket::create($data);
@@ -99,13 +98,7 @@ class TicketController extends Controller
 
         }
 
-        // Notification via Telegram
-//        $token = '5915915467:AAHnqdLbw2H6ELKlIqaHZ8VNZGwVOO1VmgQ';
-//        $chat_id = '543172626';
-//        $message = "New Ticket!";
-//        file_get_contents('https://api.telegram.org/bot'.$token.'/sendMessage?chat_id='.$chat_id.'&text='.urlencode($message));
-            dispatch(new TelegramNotificationJob(543172626));
-
+        dispatch(new TelegramNotificationJob(543172626, $ticket));
         return redirect()->route('ticket.index');
     }
 

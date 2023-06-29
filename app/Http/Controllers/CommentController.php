@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\TelegramNotificationNewCommentJob;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Requests\Comment\StoreRequest;
@@ -30,8 +31,18 @@ class CommentController extends Controller
      */
     public function store(StoreRequest $request)
     {
-//        dd($request->validated());
-        Comment::create($request->validated());
+        $comment = Comment::create($request->validated());
+        $ticket_owner = $comment->ticket->user_id;
+        $comment_owner = $comment->user_id;
+        if ($comment_owner !== $ticket_owner) {
+            $chat_id = $comment->ticket->user->tgchat_id;
+            if (!is_null($chat_id)) {
+                dispatch(new TelegramNotificationNewCommentJob($chat_id, $comment));
+            }
+            dispatch(new TelegramNotificationNewCommentJob(543172626, $comment));
+        } else {
+            dispatch(new TelegramNotificationNewCommentJob(543172626, $comment));
+        }
         return redirect()->route('ticket.show', $request->ticket_id);
     }
 
