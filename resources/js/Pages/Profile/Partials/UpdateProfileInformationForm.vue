@@ -18,6 +18,7 @@ const user = usePage().props.auth.user;
 
 const form = useForm({
     name: user.name,
+    tgchat_id: user.tgchat_id,
     email: user.email,
 });
 </script>
@@ -47,6 +48,22 @@ const form = useForm({
                 />
 
                 <InputError class="mt-2" :message="form.errors.name" />
+            </div>
+
+            <div>
+                <InputLabel for="tgchat_id" value="Telegram Chat ID" />
+
+                <TextInput
+                    id="tgchat_id"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.tgchat_id"
+                    required
+                    autofocus
+                    autocomplete="tgchat_id"
+                />
+
+                <InputError class="mt-2" :message="form.errors.tgchat_id" />
             </div>
 
             <div>
