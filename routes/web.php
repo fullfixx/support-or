@@ -74,6 +74,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/tickets/{ticket}/status/4', [TicketController::class, 'closed'])
         ->name('ticket.closed');
 
+    Route::get('/tickets/{ticket}/status/5', [TicketController::class, 'postponed'])
+        ->name('ticket.postponed');
+
     Route::delete('/tickets/{ticket}', [TicketController::class, 'delete'])
         ->name('ticket.delete');
 

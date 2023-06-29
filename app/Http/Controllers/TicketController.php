@@ -152,6 +152,12 @@ class TicketController extends Controller
         return redirect()->route('ticket.show', $ticket_id);
     }
 
+    public function postponed($ticket_id)
+    {
+        DB::update('UPDATE tickets SET status_id = 5 WHERE id = ?', [$ticket_id]);
+        return redirect()->route('ticket.show', $ticket_id);
+    }
+
     /**
      * Remove the specified resource from storage.
      */

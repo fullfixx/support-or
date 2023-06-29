@@ -23,6 +23,7 @@
                                 <span v-if="ticket.status_id == 2" class="text-blue-600 font-bold">{{ ticket.status_name }}</span>
                                 <span v-if="ticket.status_id == 3" class="text-green-600 font-bold">{{ ticket.status_name }}</span>
                                 <span v-if="ticket.status_id == 4" class="text-gray-400 font-bold">{{ ticket.status_name }}</span>
+                                <span v-if="ticket.status_id == 5" class="text-purple-400 font-bold">{{ ticket.status_name }}</span>
                             </div>
                             <div><span class="text-sm font-light text-gray-400 mr-4">created at:</span>{{ ticket.created_at }}</div>
                         </div>
@@ -43,6 +44,9 @@
                                 </div>
                                 <div v-if="$page.props.auth.user.id === ticket.user_id">
                                     <Link class="rounded border-gray-300 bg-gray-100 border p-2 hover:border-gray-500 hover:bg-gray-200" :href="route('ticket.closed', ticket.id)">Closed</Link>
+                                </div>
+                                <div v-if="$page.props.auth.user.rank === 7">
+                                    <Link class="rounded border-purple-300 bg-purple-100 border p-2 hover:border-purple-500 hover:bg-purple-200" :href="route('ticket.postponed', ticket.id)">Postponed</Link>
                                 </div>
                             </div>
 
