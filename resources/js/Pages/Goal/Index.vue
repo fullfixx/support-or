@@ -249,6 +249,7 @@
             changeStatus(task_id, status) {
                 this.$inertia.patch(`/tasks/${task_id}`, {
                     status: status,
+                    preserveScroll: true,
                 })
             },
         }

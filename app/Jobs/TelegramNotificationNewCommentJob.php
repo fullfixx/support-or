@@ -35,6 +35,7 @@ class TelegramNotificationNewCommentJob implements ShouldQueue
             Ticket title - ".$this->comment->ticket->title."\n
             Comment Author - ".$this->comment->user->name."\n
             ";
+        $message = rawurldecode($message);
         file_get_contents('https://api.telegram.org/bot'.$token.'/sendMessage?chat_id='.$this->chat_id.'&text='.urlencode($message).'&parse_mode=HTML');
     }
 }
