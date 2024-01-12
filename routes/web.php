@@ -116,6 +116,45 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/moysklads/store', [MoyskladController::class, 'store'])
         ->name('moysklad.store');
 
+    Route::get('/moysklads/expenseitems', [MoyskladController::class, 'expenseitems'])
+        ->name('moysklad.expenseitems');
+
+    Route::get('/moysklads/counterAgents', [MoyskladController::class, 'counterAgents'])
+        ->name('moysklad.counterAgents');
+
+    Route::get('/moysklads/paymentoutstore', [MoyskladController::class, 'paymentoutStore'])
+        ->name('moysklad.paymentoutstore');
+
+    Route::get('/moysklads/organization', [MoyskladController::class, 'organization'])
+        ->name('moysklad.organization');
+
+    Route::get('/moysklads/accounts', [MoyskladController::class, 'accounts'])
+        ->name('moysklad.accounts');
+
+    Route::get('/moysklads/currency', [MoyskladController::class, 'currency'])
+        ->name('moysklad.currency');
+
+    Route::get('/moysklads/paymentoutshow', [MoyskladController::class, 'paymentoutShow'])
+        ->name('moysklad.paymentoutshow');
+
+    Route::get('/moysklads/supply', [MoyskladController::class, 'supply'])
+        ->name('moysklad.supply');
+
+    Route::get('/moysklads/supplymetadata', [MoyskladController::class, 'supplyMetadata'])
+        ->name('moysklad.supplymetadata');
+
+    Route::get('/moysklads/supplypositions', [MoyskladController::class, 'supplyPositions'])
+        ->name('moysklad.supplypositions');
+
+    Route::get('/moysklads/supplystore', [MoyskladController::class, 'supplyStore'])
+        ->name('moysklad.supplystore');
+
+    Route::get('/moysklads/paymentoutedit', [MoyskladController::class, 'paymentoutEdit'])
+        ->name('moysklad.paymentoutedit');
+
+    Route::get('/moysklads/statementinsert', [MoyskladController::class, 'statementinsert'])
+        ->name('moysklad.statementinsert');
+
     Route::get('/test', [MoyskladController::class, 'test']);
 
     Route::get('prestashop', [PrestashopController::class, 'index']);
