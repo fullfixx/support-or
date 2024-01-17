@@ -27,7 +27,7 @@ class PreStatementsImportCommand extends Command
      */
     public function handle()
     {
-        Excel::import(new PreStatementsImport(), public_path('excel/statement_122023.xls'));
+        Excel::import(new PreStatementsImport(), public_path('excel/statement.xls'));
         dd('checking is done');
     }
 }

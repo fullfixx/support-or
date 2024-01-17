@@ -144,15 +144,15 @@ class PreStatementsImport implements ToCollection
 
                 if (!isset($expenseitem)) {
                     $expenseitem = '15108be1-b45c-11ee-0a80-08ec0019a753';
-                    $expenseitemdesc = 'The Unknown Robot';
+                    $expenseitemdesc = '!!!!!!!!!!!!!!!!!!!!!!!!!!';
                 }
 
                 if (!isset($agent)) {
-                    $agent = 'The Unknown Robot'; // a4abfdc9-b459-11ee-0a80-08ec00191da1
+                    $agent = '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'; // a4abfdc9-b459-11ee-0a80-08ec00191da1
                 }
 
                 $i = $i+1;
-                dump($i.' : '.$item[1].' = '.$item[5].' : '.$expenseitemdesc.', = '.$agent);
+                dump($i.' = '.$item[5].' : '.$expenseitemdesc.', = '.$agent);
             }
         }
     }
