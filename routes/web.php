@@ -119,8 +119,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/moysklads/expenseitems', [MoyskladController::class, 'expenseitems'])
         ->name('moysklad.expenseitems');
 
-    Route::get('/moysklads/counterAgents', [MoyskladController::class, 'counterAgents'])
-        ->name('moysklad.counterAgents');
+    Route::get('/moysklads/counteragents', [MoyskladController::class, 'counteragents'])
+        ->name('moysklad.counteragents');
 
     Route::get('/moysklads/paymentoutstore', [MoyskladController::class, 'paymentoutStore'])
         ->name('moysklad.paymentoutstore');
@@ -154,6 +154,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/moysklads/statementinsert', [MoyskladController::class, 'statementinsert'])
         ->name('moysklad.statementinsert');
+
+    Route::get('/moysklads/counterpartystore', [MoyskladController::class, 'counterpartystore'])
+        ->name('moysklad.counterpartystore');
+
+    Route::get('/moysklads/expenseitemstore', [MoyskladController::class, 'expenseitemstore'])
+        ->name('moysklad.expenseitemstore');
 
     Route::get('/test', [MoyskladController::class, 'test']);
 

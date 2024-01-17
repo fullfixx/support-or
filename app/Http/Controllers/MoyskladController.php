@@ -130,7 +130,7 @@ class MoyskladController extends Controller
     /*
      *  Получить контрагентов
      */
-    public function counterAgents()
+    public function counteragents()
     {
         $client = new Client([
             'base_uri' => 'https://api.moysklad.ru/api/remap/1.2/',
@@ -142,7 +142,7 @@ class MoyskladController extends Controller
         ]);
 
         $entity = 'entity/counterparty';
-        $filter = '?filter=name='.urlencode("PayPal");
+        $filter = '?filter=name='.urlencode("Таможенный брокер");
         $response = $client->request('GET', $entity.$filter);
         $body = $response->getBody();
         $jsonData = json_decode($body->getContents(), true);
@@ -422,7 +422,7 @@ class MoyskladController extends Controller
                   "mediaType": "application/json"
                 }
               },
-              "sum": 7700
+              "sum": 7700,
           }'
         ]);
 
@@ -637,6 +637,56 @@ class MoyskladController extends Controller
         $response = $client->request('POST', $entity);
         $content = json_decode($response->getBody()->getContents());
         dd($content);
+    }
+
+    /*
+     *  Создать контрагента
+     */
+    public function counterpartystore()
+    {
+        $entity = 'entity/counterparty';
+        $client = new Client([
+            'base_uri' => 'https://api.moysklad.ru/api/remap/1.2/',
+            'timeout'  => 10.0,
+            'headers' => [
+                'Authorization' => "Bearer f210315458e7173f6b67743fc847ffd36c1cba06",
+                'Content-Type' => 'application/json',
+                'Accept-Encoding' => 'gzip',
+            ],
+            'body' => json_encode([
+                'name' => 'the Unknown Robot',
+            ])
+        ]);
+
+        $response = $client->request('POST', $entity);
+        $content = json_decode($response->getBody()->getContents());
+        print_r($content->id);
+        die();
+    }
+
+    /*
+     *  Создать статью расходов
+     */
+    public function expenseitemstore()
+    {
+        $entity = 'entity/expenseitem';
+        $client = new Client([
+            'base_uri' => 'https://api.moysklad.ru/api/remap/1.2/',
+            'timeout'  => 10.0,
+            'headers' => [
+                'Authorization' => "Bearer f210315458e7173f6b67743fc847ffd36c1cba06",
+                'Content-Type' => 'application/json',
+                'Accept-Encoding' => 'gzip',
+            ],
+            'body' => json_encode([
+                'name' => 'the Unknown Robot',
+            ])
+        ]);
+
+        $response = $client->request('POST', $entity);
+        $content = json_decode($response->getBody()->getContents());
+        print_r($content->id);
+        die();
     }
 
 }

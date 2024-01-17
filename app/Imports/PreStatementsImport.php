@@ -5,10 +5,10 @@ namespace App\Imports;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ToCollection;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Concerns\ToCollection;
 
-class StatementsImport implements ToCollection
+class PreStatementsImport implements ToCollection
 {
     /**
     * @param Collection $collection
@@ -148,174 +148,11 @@ class StatementsImport implements ToCollection
                 }
 
                 if (!isset($agent)) {
-                    $agent = 'a4abfdc9-b459-11ee-0a80-08ec00191da1'; // The Unknown Robot
+                    $agent = 'The Unknown Robot'; // a4abfdc9-b459-11ee-0a80-08ec00191da1
                 }
 
                 $i = $i+1;
-
-                if ($i > 0) {
-                    $moment = Carbon::createFromFormat('d.m.y', $item[0])->format('Y-m-d H:i:s');
-                    $paymentPurpose = preg_replace('/["\r\n","\r","\n"]+/', '. ', $item[2]);
-                    $sum = $item[5]*100;
-                    $organization = '3d9fdc2f-f427-11ea-0a80-00fe000aff0c'; // "SIA "Viensrats.lv"
-                    $store = 'c84788bb-badf-11ea-0a80-00dd000ec99d';
-                    $entity = 'entity/supply';
-                    $client = new Client([
-                        'base_uri' => 'https://api.moysklad.ru/api/remap/1.2/',
-                        'timeout'  => 10.0,
-                        'headers' => [
-                            'Authorization' => "Bearer f210315458e7173f6b67743fc847ffd36c1cba06",
-                            'Content-Type' => 'application/json',
-                            'Accept-Encoding' => 'gzip',
-                        ],
-                        'body' => '{
-               "description":"робот",
-               "moment": "'.$moment.'",
-               "applicable":true,
-               "vatEnabled":true,
-               "vatIncluded":true,
-               "rate":{
-                  "currency":{
-                     "meta":{
-                        "href":"https://api.moysklad.ru/api/remap/1.2/entity/currency/c847acf8-badf-11ea-0a80-00dd000ec9a2",
-                        "metadataHref":"https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
-                        "type":"currency",
-                        "mediaType":"application/json"
-                     }
-                  },
-                  "value":1
-               },
-               "organization":{
-                  "meta":{
-                     "href":"https://api.moysklad.ru/api/remap/1.2/entity/organization/'.$organization.'",
-                     "metadataHref":"https://api.moysklad.ru/api/remap/1.2/entity/organization/metadata",
-                     "type":"organization",
-                     "mediaType":"application/json"
-                  }
-               },
-               "agent":{
-                  "meta":{
-                     "href":"https://api.moysklad.ru/api/remap/1.2/entity/counterparty/'.$agent.'",
-                     "metadataHref":"https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
-                     "type":"counterparty",
-                     "mediaType":"application/json"
-                  }
-               },
-               "store":{
-                  "meta":{
-                     "href":"https://api.moysklad.ru/api/remap/1.2/entity/store/'.$store.'",
-                     "metadataHref":"https://api.moysklad.ru/api/remap/1.2/entity/store/metadata",
-                     "type":"store",
-                     "mediaType":"application/json"
-                  }
-               },
-               "positions":[
-                  {
-                     "quantity":1,
-                     "price":'.$sum.',
-                     "discount":0,
-                     "vat":0,
-                     "assortment":{
-                        "meta":{
-                           "href":"https://api.moysklad.ru/api/remap/1.2/entity/service/d113363f-03dc-11eb-0a80-098b000a6134",
-                           "metadataHref":"https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
-                           "type":"service",
-                           "mediaType":"application/json",
-                           "uuidHref":"https://online.moysklad.ru/app/#good/edit?id=d113286d-03dc-11eb-0a80-098b000a6132"
-                        }
-                     },
-                     "overhead":0
-                  }
-               ]
-            }'
-                    ]);
-
-                    $response = $client->request('POST', $entity, ['connect_timeout' => 15]);
-                    $content = json_decode($response->getBody()->getContents());
-                    $supply = $content->id;
-
-                    $entity = 'entity/paymentout';
-                    $client = new Client([
-                        'base_uri' => 'https://api.moysklad.ru/api/remap/1.2/',
-                        'timeout'  => 10.0,
-                        'headers' => [
-                            'Authorization' => "Bearer f210315458e7173f6b67743fc847ffd36c1cba06",
-                            'Content-Type' => 'application/json',
-                            'Accept-Encoding' => 'gzip',
-                        ],
-                        'body' => '{
-              "description": "робот",
-              "moment": "'.$moment.'",
-              "paymentPurpose": "'.$paymentPurpose.'",
-              "organization": {
-                "meta": {
-                  "href": "https://api.moysklad.ru/api/remap/1.2/entity/organization/'.$organization.'",
-                  "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/organization/metadata",
-                  "type": "organization",
-                  "mediaType": "application/json"
-                }
-              },
-              "agent": {
-                "meta": {
-                  "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/'.$agent.'",
-                  "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
-                  "type": "counterparty",
-                  "mediaType": "application/json"
-                }
-              },
-              "expenseItem": {
-                "meta": {
-                  "href": "https://api.moysklad.ru/api/remap/1.2/entity/expenseitem/'.$expenseitem.'",
-                  "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/expenseitem/metadata",
-                  "type": "expenseitem",
-                  "mediaType": "application/json"
-                }
-              },
-              "sum":'.$sum.'
-          }'
-                    ]);
-
-                    $response = $client->request('POST', $entity, ['connect_timeout' => 15]);
-                    $content = json_decode($response->getBody()->getContents());
-                    $paymentout = $content->id;
-
-                    $entity = 'entity/paymentout';
-                    $client = new Client([
-                        'base_uri' => 'https://api.moysklad.ru/api/remap/1.2/',
-                        'timeout'  => 10.0,
-                        'headers' => [
-                            'Authorization' => "Bearer f210315458e7173f6b67743fc847ffd36c1cba06",
-                            'Content-Type' => 'application/json',
-                            'Accept-Encoding' => 'gzip',
-                        ],
-                        'body' => '[
-                {
-                    "meta": {
-                        "href": "https://api.moysklad.ru/api/remap/1.2/entity/paymentout/'.$paymentout.'",
-                        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/paymentout/metadata",
-                        "type": "paymentout",
-                        "mediaType": "application/json"
-                      },
-                      "operations": [
-                        {
-                            "meta": {
-                                "href": "https://api.moysklad.ru/api/remap/1.2/entity/supply/'.$supply.'",
-                                "type": "supply"
-                            },
-                            "linkedSum": '.$sum.'
-                        }
-                      ]
-
-                }
-            ]'
-                    ]);
-
-                    $response = $client->request('POST', $entity, ['connect_timeout' => 15]);
-                    dump($i.' value: '.$item[5].' status '.$response->getStatusCode());
-//                die();
-                }
-//                api-request finish
-
+                dump($i.' : '.$item[1].' = '.$item[5].' : '.$expenseitemdesc.', = '.$agent);
             }
         }
     }
